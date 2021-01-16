@@ -6,15 +6,12 @@ import FriendList from '../components/FriendList';
 
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
-
+import Auth from '../utils/auth';
 import { ADD_FRIEND } from '../utils/mutations';
 import ThoughtForm from '../components/ThoughtForm';
 
-import Auth from '../utils/auth';
 
 const Profile = props => {
-  const [addFriend] = useMutation(ADD_FRIEND);
-
   const { username: userParam } = useParams();
 
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
@@ -22,6 +19,8 @@ const Profile = props => {
   });
 
   const user = data?.me || data?.user || {};
+
+  const [addFriend] = useMutation(ADD_FRIEND);
 
   // redirect to personal profile page if username is yours
   if (
